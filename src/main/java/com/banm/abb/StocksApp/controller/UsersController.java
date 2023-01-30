@@ -1,10 +1,12 @@
 package com.banm.abb.StocksApp.controller;
 
 import com.banm.abb.StocksApp.dto.GetUsersDto;
+import com.banm.abb.StocksApp.entity.User;
 import com.banm.abb.StocksApp.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +23,10 @@ public class UsersController {
     @GetMapping
     public ResponseEntity<List<GetUsersDto>> getUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(usersService.getUsers());
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser() {
+        return ResponseEntity.ok((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }

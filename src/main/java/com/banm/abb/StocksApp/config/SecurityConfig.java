@@ -1,6 +1,5 @@
 package com.banm.abb.StocksApp.config;
 
-import com.banm.abb.StocksApp.entity.Role;
 import com.banm.abb.StocksApp.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +25,8 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/users-list").authenticated();
+                .requestMatchers("/api/v1/users-list").authenticated()
+                .requestMatchers("/api/v1/users-list/current").authenticated();
 
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
