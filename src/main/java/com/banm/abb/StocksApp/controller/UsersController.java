@@ -1,32 +1,26 @@
 package com.banm.abb.StocksApp.controller;
 
-import com.banm.abb.StocksApp.dto.GetUsersDto;
-import com.banm.abb.StocksApp.entity.User;
+import com.banm.abb.StocksApp.dto.CurrentUserInfoDto;
+import com.banm.abb.StocksApp.dto.DepositRequestDto;
 import com.banm.abb.StocksApp.service.UsersService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/users-list")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UsersController {
 
     private final UsersService usersService;
 
-    @GetMapping
-    public ResponseEntity<List<GetUsersDto>> getUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(usersService.getUsers());
+    @GetMapping("/current")
+    public ResponseEntity<CurrentUserInfoDto> getCurrentUser() {
+        return ResponseEntity.ok(usersService.getCurrentUserInfo());
     }
 
-    @GetMapping("/current")
-    public ResponseEntity<User> getCurrentUser() {
-        return ResponseEntity.ok((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    @PostMapping("/current/deposit")
+    public ResponseEntity<String> depositMoney(@RequestBody DepositRequestDto request) {
+        return ResponseEntity.ok(usersService.depositMoney(request));
     }
 }

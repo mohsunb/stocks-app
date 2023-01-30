@@ -3,11 +3,9 @@ package com.banm.abb.StocksApp.dto;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
-public class GetUsersDto {
-
+@Builder
+public class SellStocksRequestDto {
     private String name;
-    private String surname;
-    private String email;
+    private int count;
 }

@@ -25,8 +25,11 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/users-list").authenticated()
-                .requestMatchers("/api/v1/users-list/current").authenticated();
+                .requestMatchers("/api/v1/user/current").authenticated()
+                .requestMatchers("/api/v1/user/current/deposit").authenticated()
+                .requestMatchers("/stocks/market/list-all").permitAll()
+                .requestMatchers("/stocks/market/purchase").authenticated()
+                .requestMatchers("/stocks/owned/**").authenticated();
 
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
