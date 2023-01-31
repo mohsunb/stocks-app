@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class UsersService {
@@ -26,9 +28,13 @@ public class UsersService {
 
     @Transactional
     public String depositMoney(DepositRequestDto request) {
-        Long userId = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        User user = usersRepository.findById(userId).orElseThrow();
-        user.setBalance(user.getBalance().add(request.getAmount()));
-        return "Operation successful. $" + request.getAmount() + " was deposited. Balance: $" + user.getBalance() + ".";
+        if (request.getAmount().compareTo(new BigDecimal("0")) > 0) {
+            Long userId = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            User user = usersRepository.findById(userId).orElseThrow();
+            user.setBalance(user.getBalance().add(request.getAmount()));
+            return "Operation successful. $" + request.getAmount() + " was deposited. Balance: $" + user.getBalance() + ".";
+        }
+
+        return "Deposited amount must be greater than zero.";
     }
 }
