@@ -49,7 +49,7 @@ public class AuthenticationController {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(request.getEmail());
             message.setSubject("Email verification");
-            message.setFrom("mohsun.babayev.2003@gmail.com");
+            message.setFrom("");
             message.setText("To confirm you account, please click this link: " +
                     "http://localhost:8080/api/v1/auth/confirm-account?token=" + token.getToken());
 
