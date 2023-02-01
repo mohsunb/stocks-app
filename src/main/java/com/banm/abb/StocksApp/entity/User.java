@@ -38,6 +38,8 @@ public class User implements UserDetails {
 
     private BigDecimal balance;
 
+    private boolean enabled;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -60,11 +62,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
         return true;
     }
 }

@@ -24,7 +24,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-    public AuthenticationResponseDto register(RegisterRequestDto request) {
+    public void register(RegisterRequestDto request) {
         var user = User.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
@@ -32,11 +32,9 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .balance(new BigDecimal("0"))
+                .enabled(false)
                 .build();
         repository.save(user);
-
-        var jwt = jwtService.generateToken(user);
-        return AuthenticationResponseDto.builder().token(jwt).build();
     }
 
     public AuthenticationResponseDto authenticate(AuthenticationRequestDto request) {
