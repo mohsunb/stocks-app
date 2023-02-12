@@ -1,6 +1,6 @@
 package com.banm.abb.StocksApp.repository;
 
-import com.banm.abb.StocksApp.entity.EmailConfirmationToken;
+import com.banm.abb.StocksApp.model.EmailConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

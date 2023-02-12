@@ -1,4 +1,4 @@
-package com.banm.abb.StocksApp.entity;
+package com.banm.abb.StocksApp.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

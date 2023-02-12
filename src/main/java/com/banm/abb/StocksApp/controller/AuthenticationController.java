@@ -7,7 +7,6 @@ import com.banm.abb.StocksApp.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -16,19 +15,14 @@ public class AuthenticationController {
 
     private final AuthenticationService authService;
 
-    @GetMapping("/register")
-    public ModelAndView displayRegisterForm(ModelAndView modelAndView, RegisterRequestDto request) {
-        return authService.displayRegistryForm(modelAndView, request);
-    }
-
     @PostMapping("/register")
-    public ModelAndView register(ModelAndView modelAndView, RegisterRequestDto request) {
-        return authService.register(modelAndView, request);
+    public ResponseEntity<String> register(@RequestBody RegisterRequestDto request) {
+        return ResponseEntity.ok(authService.register(request));
     }
 
-    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmAccount(ModelAndView modelAndView, @RequestParam("token") String token) {
-        return authService.confirmAccount(modelAndView, token);
+    @GetMapping("/confirm-account")
+    public ResponseEntity<String> confirmAccount(@RequestParam("token") String token) {
+        return ResponseEntity.ok(authService.confirmAccount(token));
     }
 
     @PostMapping("/auth")

@@ -4,9 +4,10 @@ import com.banm.abb.StocksApp.dto.SellStocksRequestDto;
 import com.banm.abb.StocksApp.dto.StocksAvailableDto;
 import com.banm.abb.StocksApp.dto.StocksOwnedDto;
 import com.banm.abb.StocksApp.dto.StocksPurchaseRequestDto;
-import com.banm.abb.StocksApp.entity.StocksAvailable;
-import com.banm.abb.StocksApp.entity.StocksPurchased;
-import com.banm.abb.StocksApp.entity.User;
+import com.banm.abb.StocksApp.exception.InvalidTransactionRequestException;
+import com.banm.abb.StocksApp.model.StocksAvailable;
+import com.banm.abb.StocksApp.model.StocksPurchased;
+import com.banm.abb.StocksApp.model.User;
 import com.banm.abb.StocksApp.repository.StocksAvailableRepository;
 import com.banm.abb.StocksApp.repository.StocksPurchasedRepository;
 import com.banm.abb.StocksApp.repository.UsersRepository;
@@ -50,7 +51,7 @@ public class StocksService {
 
         if (item.getPrice().multiply(new BigDecimal(request.getCount())).compareTo(user.getBalance()) > 0 ||
             request.getCount() > item.getAvailableCount())
-            return "Purchase was failed: Invalid request.";
+            throw new InvalidTransactionRequestException("Invalid request: Insufficient funds.");
 
         var purchase = StocksPurchased.builder()
                 .itemId(item.getId())
@@ -122,7 +123,7 @@ public class StocksService {
         }
 
         if (!canSell)
-            return "Invalid request.";
+            throw new InvalidTransactionRequestException("Invalid request: Cannot sell stocks not owned.");
 
         Long ownerId = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         StocksAvailable item = stocksAvailableRepository.findStocksAvailableByName(request.getName()).orElseThrow();

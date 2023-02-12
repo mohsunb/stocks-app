@@ -1,6 +1,6 @@
 package com.banm.abb.StocksApp.repository;
 
-import com.banm.abb.StocksApp.entity.User;
+import com.banm.abb.StocksApp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
