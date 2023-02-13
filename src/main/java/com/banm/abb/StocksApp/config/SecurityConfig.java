@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/user/current").authenticated()
                 .requestMatchers("/api/v1/user/current/deposit").authenticated()
                 .requestMatchers("/stocks/market/list-all").permitAll()
+                .requestMatchers("/stocks/market/list-all/test-feign").permitAll()
                 .requestMatchers("/stocks/market/purchase").authenticated()
                 .requestMatchers("/stocks/owned/**").authenticated();
 
