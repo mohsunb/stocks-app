@@ -43,6 +43,9 @@ dependencies {
 
 	// OpenFeign
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.1'
+
+	// Liquibase
+	implementation 'org.liquibase:liquibase-core'
 }
 
 tasks.named('test') {
