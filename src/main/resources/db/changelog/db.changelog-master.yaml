@@ -1,0 +1,157 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-table
+      author: Möhsün Babayev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: decimal(8, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: tinyint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create-confirmation-tokens-table
+      author: Möhsün Babayev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: confirmation_tokens
+      changes:
+        - createTable:
+            tableName: confirmation_tokens
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: date
+                  constraints:
+                    nullable: true
+  - changeSet:
+      id: create-stocks-available-table
+      author: Möhsün Babayev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: stocks_available
+      changes:
+        - createTable:
+            tableName: stocks_available
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal(8, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: available_count
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create-stocks-purchased-table
+      author: Möhsün Babayev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: stocks_purchased
+      changes:
+        - createTable:
+            tableName: stocks_purchased
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: owned_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: item_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: count
+                  type: bigint
+                  constraints:
+                    nullable: false
