@@ -41,9 +41,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.h2database:h2'
 
-	// OpenFeign
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.1'
-
 	// Liquibase
 	implementation 'org.liquibase:liquibase-core'
 }
