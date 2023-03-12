@@ -43,15 +43,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (user_temp.isPresent())
             throw new EmailAlreadyInUseException("Invalid request. This email is already in use.");
 
-        System.out.println("request.getPassword() -> \"" + request.getPassword() + "\"");
-
         var user = User.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
                 .username(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
-                .balance(new BigDecimal("0"))
+                .balance(BigDecimal.ZERO)
                 .enabled(false)
                 .build();
         repository.save(user);
@@ -72,8 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public AuthenticationResponseDto authenticate(AuthenticationRequestDto request) {
-        var user = repository.findByUsername(request.getEmail()).orElseThrow(
-                () -> new UserDoesNotExistException("Such user does not exist."));
+        var user = repository.findByUsername(request.getEmail()).orElseThrow(() -> new UserDoesNotExistException("Such user does not exist."));
         authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var jwt = jwtService.generateToken(user);
 
