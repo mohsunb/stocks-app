@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,13 +36,12 @@ public class StocksServiceImpl implements StocksService {
     private final EmailService emailService;
 
     public List<StocksAvailableDto> listAllStocks() {
-        List<StocksAvailableDto> list = new ArrayList<>();
-        for (StocksAvailable s : stocksAvailableRepository.findAll())
-            list.add(StocksAvailableDto.builder()
-                    .name(s.getName())
-                    .price(s.getPrice())
-                    .availableCount(s.getAvailableCount()).build());
-        return list;
+        return stocksAvailableRepository.findAll().stream()
+                .map(i -> StocksAvailableDto.builder()
+                        .name(i.getName())
+                        .price(i.getPrice())
+                        .availableCount(i.getAvailableCount())
+                        .build()).collect(Collectors.toList());
     }
 
     @Transactional
@@ -52,7 +52,7 @@ public class StocksServiceImpl implements StocksService {
         User user = usersRepository.findById(id).orElseThrow();
 
         if (item.getPrice().multiply(new BigDecimal(request.getCount())).compareTo(user.getBalance()) > 0 ||
-            request.getCount() > item.getAvailableCount())
+                request.getCount() > item.getAvailableCount())
             throw new InvalidTransactionRequestException("Invalid request: Insufficient funds.");
 
         var purchase = StocksPurchased.builder()
